@@ -15,27 +15,44 @@
             <a href="{{ url('/mauxe') }}">Mẫu Xe</a>
             <a href="{{ url('/datlich') }}">Đặt Lịch Lái Thử</a>
             <a href="{{ url('/phanphoi') }}">Hệ thống phân phối</a>
+            <a href="{{ url('/login') }}">Đăng nhập</a>
+            <a href="{{ url('/register') }}">Đăng kí</a>
         </nav>
     </header>
 
     <section class="hero">
         <div class="form-container">
             <h1>ĐĂNG KÝ LÁI THỬ XE BMW</h1>
+            @if(session('success'))
+            <div style="color: green; font-weight: bold;">
+                {{ session('success') }}
+            </div>
+            @endif
+            @if ($errors->any())
+            <div style="color: red;">
+                <ul>
+                    @foreach ($errors->all() as $err)
+                        <li>{{ $err }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
             <form action="{{ route('testdrive.store') }}" method="POST">
             @csrf
                 <label>Họ và Tên *</label>
-                <input type="text" placeholder="Nhập họ và tên" required>
+                <input type="text" name="name" placeholder="Nhập họ và tên" required>
 
                 <label>Số điện thoại *</label>
-                <input type="tel" placeholder="Nhập số điện thoại" required>
+                <input type="tel" name="phone" placeholder="Nhập số điện thoại" required>
 
                 <label>Email *</label>
-                <input type="email" placeholder="Nhập email" required>
+                <input type="email" name="email" placeholder="Nhập email" required>
 
                 <label>Địa chỉ *</label>
-                <input type="text" placeholder="Nhập địa chỉ" required>
-                 <label>Mẫu xe *</label>
-                <select required>
+                <input type="text" name="address" placeholder="Nhập địa chỉ" required>
+
+                <label>Mẫu xe *</label>
+                <select name="car_model" required>
                     <option value="">Chọn mẫu xe</option>
                     <option value="BMW 320i">BMW 3 Series</option>
                     <option value="BMW X5">BMW 5 Series</option>
@@ -44,7 +61,7 @@
                 </select>
 
                 <label>Thời gian lái thử *</label>
-                <input type="datetime-local" required>
+                <input type="datetime-local" name="test_drive_time" required>
 
                 <button type="submit">Gửi đăng ký</button>
             </form>

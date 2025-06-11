@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Models\TestDrive;
+use Illuminate\Http\Request;
 
 class TestDriveController extends Controller
 {
-    // Lưu thông tin người dùng
+
     public function store(Request $request)
     {
         $request->validate([
@@ -19,16 +18,16 @@ class TestDriveController extends Controller
             'test_drive_time' => 'required|date',
         ]);
 
-        TestDrive::create($request->all());
+        TestDrive::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'address' => $request->address,
+            'car_model' => $request->car_model,
+            'test_drive_time' => $request->test_drive_time,
+        ]);
 
-        return back()->with('success', 'Đăng ký lái thử thành công!');
+        return redirect()->back()->with('success', 'Đăng ký lái thử thành công!');
     }
 
-    // Admin xem danh sách
-    public function index()
-    {
-        $list = TestDrive::orderBy('test_drive_time', 'desc')->get();
-        return view('admin.testdrive.index', compact('list'));
-    }
 }
-

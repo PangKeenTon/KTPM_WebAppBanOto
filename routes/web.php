@@ -14,10 +14,6 @@ use App\Http\Controllers\TestDriveController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -49,8 +45,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/test-drives', [AdminController::class, 'testDrives'])->name('admin.testdrives');
     
 });
-Route::post('/datlich', [TestDriveController::class, 'store'])->name('testdrive.store');
 Route::get('/admin/lich-lai-thu', [TestDriveController::class, 'index'])->name('testdrive.index');
+Route::post('/dat-lich-lai-thu', [TestDriveController::class, 'store'])->name('testdrive.store');
+
 
 
 require __DIR__.'/auth.php';
